@@ -9,15 +9,37 @@ public class calculadora {
         cabecalho();
         menu();
 
-        int entrada = valida_entrada(entrada_int("\nDigite a opção desejada: "), 1, 4);
+        // int entrada = valida_entrada(entrada_int("\nDigite a opção desejada: "), 1, 4);
 
+        int entrada;
+
+        do {
+             entrada = entrada_int("\nDigite a opção desejada: ");
+        } while(!valida_entrada(entrada, 1, 4));
+        
         double n1 = entrada_double("Informe o primeiro valor: ");
         double n2 = entrada_double("Informe o segundo valor: ");
+        
+        escolha_menu(entrada, n1, n2);
+    
+    }
 
+    static void cabecalho() {
+        System.out.println("========== CALCULADORA ==========");
+    }
+
+    static void menu() {
+        System.out.println("Escolha uma das opções: ");
+        System.out.println("1 - Para somar");
+        System.out.println("2 - Para subtrair");
+        System.out.println("3 - Para multiplicar");
+        System.out.println("4 - Para dividir");
+    }
+
+    static void escolha_menu(int opcao, double n1, double n2){
         double resultado = 0.0;
         String tipoOperacao = "";
-
-        switch (entrada) {
+        switch (opcao) {
             case 1:
                 resultado = soma(n1, n2);
                 tipoOperacao = "SOMA";
@@ -35,20 +57,7 @@ public class calculadora {
                 tipoOperacao = "DIVISÃO";
                 break;
         }
-
         retorno_resultado(tipoOperacao, resultado);
-    }
-
-    static void cabecalho() {
-        System.out.println("========== CALCULADORA ==========");
-    }
-
-    static void menu() {
-        System.out.println("Escolha uma das opções: ");
-        System.out.println("1 - Para somar");
-        System.out.println("2 - Para subtrair");
-        System.out.println("3 - Para multiplicar");
-        System.out.println("4 - Para dividir");
     }
 
     static int entrada_int(String mensagem) {
@@ -63,11 +72,19 @@ public class calculadora {
         return entrada;
     }
 
-    static int valida_entrada(int entrada, int inicio, int limite) {
-        while (entrada < inicio || entrada > limite) {
-            entrada = entrada_int("\nValor inválido. Digite novamente: ");
+    // static int valida_entrada(int entrada, int inicio, int limite) {
+    //     while (entrada < inicio || entrada > limite) {
+    //         entrada = entrada_int("\nValor inválido. Digite novamente: ");
+    //     }
+    //     return entrada;
+    // }
+
+    static boolean valida_entrada(int entrada, int inicio, int limite) {
+        if (entrada < inicio || entrada > limite) {
+            System.out.println("Valor inválido. Digite novamente. ");
+            return false;
         }
-        return entrada;
+        return true;
     }
 
     static double soma(double a, double b) {
